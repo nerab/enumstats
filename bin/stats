@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'enumstats'
+
+data = []
+
+ARGF.read.split.each do |line|
+  data << line.to_f
+end
+
+%w[count mean variance standard_deviation sum min max].each do |stat|
+  puts "#{stat}: #{data.send(stat)}"
+end

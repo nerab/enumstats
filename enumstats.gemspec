@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["nerab@gmx.net"]
   gem.description   = %q{Adds simple stats like average, variance and standard deviation to Enumerable}
   gem.summary       = %q{Stats for Enumerables}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/nerab/enumstats"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
