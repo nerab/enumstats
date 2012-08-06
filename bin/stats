@@ -2,6 +2,58 @@
 
 require 'bundler/setup'
 require 'enumstats'
+require 'optparse'
+
+output_available = %w[count mean variance standard_deviation sum min max]
+output_selected = []
+
+option_parser = OptionParser.new do |opts|
+  opts.banner  = <<ABOUT
+Calculates simple statistics like average, variance, and standard deviation.
+Input is read from STDIN, separated by $IFS.
+
+Author: Nicolas E. Rabenau <nerab@gmx.at>
+
+Synopsis:
+
+    stats [options]
+
+Example Usage:
+
+    # print all stats for the given array
+    echo '5.0 10.0 15.0' | stats
+
+    # print all stats except the mean
+    echo '5.0 10.0 15.0' | stats --no-mean
+
+    # print just the variance
+    echo '5.0 10.0 15.0' | stats --variance
+
+    # combine more than one stat
+    echo '5.0 10.0 15.0' | stats --min --variance
+
+Options:
+ABOUT
+
+  output_available.each do |stat|
+    opts.on("--[no-]#{stat}", "Do [only|not] print the #{stat}") do |selected|
+      if selected
+        output_selected << stat
+      else
+        output_available.delete(stat)
+      end
+    end
+  end
+end
+
+begin
+  option_parser.parse!
+rescue
+  STDERR.puts "Error: #{$!.message}"
+  STDERR.puts
+  STDERR.puts option_parser.banner
+  exit 1
+end
 
 data = []
 
@@ -9,6 +61,16 @@ ARGF.read.split.each do |line|
   data << line.to_f
 end
 
-%w[count mean variance standard_deviation sum min max].each do |stat|
-  puts "#{stat}: #{data.send(stat)}"
+case output_selected.size
+when 0
+  output_available.each do |stat|
+    puts "#{stat}: #{data.send(stat)}"
+  end
+when 1
+  puts data.send(output_selected.first)
+else
+  output_selected.each do |stat|
+    puts "#{stat}: #{data.send(stat)}"
+  end
 end
+

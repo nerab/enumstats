@@ -16,4 +16,6 @@ Gem::Specification.new do |gem|
   gem.version       = Enumstats::VERSION
 
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'open4'
+  gem.add_development_dependency 'pry'
 end
