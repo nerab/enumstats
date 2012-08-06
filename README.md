@@ -1,6 +1,8 @@
-# Enumstats
+# Enumerable Stats
 
-TODO: Write a gem description
+Provides simple statistics for any Enumerable.
+
+[![Build Status](https://secure.travis-ci.org/nerab/enumstats.png?branch=master)](http://travis-ci.org/nerab/enumstats)
 
 ## Installation
 
@@ -18,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+See unit tests for usage.
 
 ## Contributing
 
