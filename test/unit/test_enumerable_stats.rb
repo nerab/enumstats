@@ -1,4 +1,5 @@
 require 'helper'
+require 'hms'
 
 class TestEnumerableStats < MiniTest::Unit::TestCase
   def test_stats_example1
@@ -43,5 +44,15 @@ class TestEnumerableStats < MiniTest::Unit::TestCase
 
     samples = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     assert_in_delta(9, samples.median, 0.0001)
+  end
+
+  def test_stats_duration
+    samples = [5.0, 10.0, 15.0].map{|f| HMS::Duration.new(f)}
+    assert_in_delta(10.0, samples.mean, 1e-6)
+    assert_in_delta(25.0, samples.variance, 1e-6)
+    assert_in_delta(5.0, samples.standard_deviation, 1e-6)
+    assert_in_delta(30.0, samples.sum, 1e-6)
+    assert_in_delta(5.0, samples.min, 1e-6)
+    assert_in_delta(15.0, samples.max, 1e-6)
   end
 end
